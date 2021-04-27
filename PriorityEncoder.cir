@@ -1,0 +1,151 @@
+Priority Encoder 8 to 3
+********************
+*INPUTS FOR TESTING*
+********************
+v0  v0  0   PULSE(0 5 0 0 0 0.5m 1m)
+V1  v1  0   PULSE(0 5 0 0 0 1m 2m)
+V2  v2  0   PULSE(0 5 0 0 0 2m 4m)
+V3  v3  0   PULSE(0 5 0 0 0 4m 8m)
+V4  v4  0   PULSE(0 5 0 0 0 8m 16m)
+V5  v5  0   PULSE(0 5 0 0 0 16m 32m)
+V6  v6  0   PULSE(0 5 0 0 0 32m 64m)
+V7  v7  0   PULSE(0 5 0 0 0 64m 128m)
+
+.include    ua741.cir
+**********
+*NOT GATE*
+**********
+.subckt not 1   2
+v1  3   0   6
+m1  3   1   2   3   PFET
+m3  2   1   0   0   NFET
+
+.model  PFET    PMOS
+.model  NFET    NMOS
+.ends
+
+************************************************************************
+*SUBCIRCUIT WITH v0 - v7 AS 8 BIT INPUT AND out0 - out2 as 3 BIT OUTPUT*
+************************************************************************
+.subckt PEnc83  v0  v1  v2  v3  v4  v5  v6  v7  out0    out1    out2
+
+Xu0 v0  notv0   not
+Xu1 v1  notv1   not
+Xu2 v2  notv2   not
+Xu3 v3  notv3   not
+Xu4 v4  notv4   not
+Xu5 v5  notv5   not
+Xu6 v6  notv6   not
+Xu7 v7  notv7   not
+
+vdd vd  0   6
+**********
+*FOR OUT0*
+**********
+mp01    vd      v1      np01    vd  PFET
+mp02    vd      notv2   np01    vd  PFET
+mp03    vd      notv4   np01    vd  PFET
+mp04    vd      notv6   np01    vd  PFET
+mp05    np01    notv6   np02    vd  PFET
+mp06    np01    notv4   np02    vd  PFET
+mp07    np01    v3      np02    vd  PFET
+mp08    np02    notv6   np03    vd  PFET
+mp09    np02    v5      np03    vd  PFET
+mp010   np03    v7      out0    vd  PFET
+
+mn01    out0    notv1   nn01    0   NFET
+mn02    out0    v2      nn01    0   NFET
+mn03    out0    v4      nn01    0   NFET
+mn04    out0    v6      nn01    0   NFET
+mn05    nn01    notv3   nn02    0   NFET
+mn06    nn01    v4      nn02    0   NFET
+mn07    nn01    v6      nn02    0   NFET
+mn08    nn02    notv5   nn03    0   NFET
+mn09    nn02    v6      nn03    0   NFET
+mn010   nn03    notv7   0       0   NFET
+
+**********
+*FOR OUT1*
+**********
+mp11    vd      v2      np11    vd  PFET
+mp12    vd      notv4   np11    vd  PFET
+mp13    vd      notv5   np11    vd  PFET
+mp14    np11    v3      np12    vd  PFET
+mp15    np11    notv4   np12    vd  PFET
+mp16    np11    notv5   np12    vd  PFET
+mp17    np12    v6      np13    vd  PFET
+mp18    np13    v7      out1    vd  PFET
+
+mn11    out1    notv2   nn11    0   NFET
+mn12    out1    v4      nn11    0   NFET
+mn13    out1    v5      nn11    0   NFET
+mn14    nn11    notv3   nn12    0   NFET
+mn15    nn11    v4      nn12    0   NFET
+mn16    nn11    v5      nn12    0   NFET
+mn17    nn12    notv6   nn13    0   NFET
+mn18    nn13    notv7   0       0   NFET
+
+**********
+*FOR OUT2*
+**********
+mp21    vd      v4      np21    vd  PFET
+mp22    np21    v5      np22    vd  PFET
+mp23    np22    v6      np23    vd  PFET
+mp24    np23    v7      out2    vd  PFET
+
+mn21    out2    notv4   nn21    0   NFET
+mn22    nn21    notv5   nn22    0   NFET
+mn23    nn22    notv6   nn23    0   NFET
+mn24    nn23    notv7   0       0   NFET
+
+.model  PFET    PMOS
+.model  NFET    NMOS
+
+.ends   PEnc83
+
+
+**************************************************
+*NOISE REMOVAL SUBCIRCUIT WITH THRESHOLD VALUE 4V*
+**************************************************
+.subckt NoiseRem    inp out
+vref    ref 0   4
+vcc     vc  0   5
+vdd     vd  0   0
+
+XU1 inp ref vc  vd  out UA741
+.ends   NoiseRem
+
+
+********************************************************
+*FINAL CIRCUIT USING NOISE REMOVER AND PRI0RITY ENCODER*
+********************************************************
+Xu1 v0  v1  v2  v3  v4  v5  v6  v7  out0    out1    out2    PEnc83
+Xu2 out0    resol0  NoiseRem
+Xu3 out1    resol1  NoiseRem
+Xu4 out2    resol2  NoiseRem
+
+
+.tran   10u 128m
+.control
+run
+
+set color0=white
+set color1=black 
+set color2=red
+set color3=darkorange
+set color4=Teal
+set color5=darkblue
+set color7=darkgreen
+set Xbrushwidth=3
+
+*******
+*PLOTS*
+*******
+plot    v(v1)       v(v2)+5     v(v3)+10        v(v4)+15 
+plot    v(resol0)   v(resol1)+6 v(resol2)+12    v(out0)+16  v(out1)+21  v(out2)+26
+plot    v(out0)     v(resol0)
+plot    v(out1)     v(resol1)
+plot    v(out2)     v(resol2)
+
+.endc
+.end
