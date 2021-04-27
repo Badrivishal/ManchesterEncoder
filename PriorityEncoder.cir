@@ -1,15 +1,15 @@
-Priority Encoder 8 to 3
+* Priority Encoder 8 to 3
 ********************
 *INPUTS FOR TESTING*
 ********************
-v0  v0  0   PULSE(0 5 0 0 0 0.5m 1m)
-V1  v1  0   PULSE(0 5 0 0 0 1m 2m)
-V2  v2  0   PULSE(0 5 0 0 0 2m 4m)
-V3  v3  0   PULSE(0 5 0 0 0 4m 8m)
-V4  v4  0   PULSE(0 5 0 0 0 8m 16m)
-V5  v5  0   PULSE(0 5 0 0 0 16m 32m)
-V6  v6  0   PULSE(0 5 0 0 0 32m 64m)
-V7  v7  0   PULSE(0 5 0 0 0 64m 128m)
+* v0  v0  0   PULSE(0 5 0 0 0 0.5m 1m)
+* V1  v1  0   PULSE(0 5 0 0 0 1m 2m)
+* V2  v2  0   PULSE(0 5 0 0 0 2m 4m)
+* V3  v3  0   PULSE(0 5 0 0 0 4m 8m)
+* V4  v4  0   PULSE(0 5 0 0 0 8m 16m)
+* V5  v5  0   PULSE(0 5 0 0 0 16m 32m)
+* V6  v6  0   PULSE(0 5 0 0 0 32m 64m)
+* V7  v7  0   PULSE(0 5 0 0 0 64m 128m)
 
 .include    ua741.cir
 **********
@@ -119,33 +119,33 @@ XU1 inp ref vc  vd  out UA741
 ********************************************************
 *FINAL CIRCUIT USING NOISE REMOVER AND PRI0RITY ENCODER*
 ********************************************************
-Xu1 v0  v1  v2  v3  v4  v5  v6  v7  out0    out1    out2    PEnc83
-Xu2 out0    resol0  NoiseRem
-Xu3 out1    resol1  NoiseRem
-Xu4 out2    resol2  NoiseRem
+* Xu1 v0  v1  v2  v3  v4  v5  v6  v7  out0    out1    out2    PEnc83
+* Xu2 out0    resol0  NoiseRem
+* Xu3 out1    resol1  NoiseRem
+* Xu4 out2    resol2  NoiseRem
 
 
-.tran   10u 128m
-.control
-run
+* .tran   10u 128m
+* .control
+* run
 
-set color0=white
-set color1=black 
-set color2=red
-set color3=darkorange
-set color4=Teal
-set color5=darkblue
-set color7=darkgreen
-set Xbrushwidth=3
+* set color0=white
+* set color1=black 
+* set color2=red
+* set color3=darkorange
+* set color4=Teal
+* set color5=darkblue
+* set color7=darkgreen
+* set Xbrushwidth=3
 
 *******
-*PLOTS*
+*PLOTS FOR TESTING*
 *******
-plot    v(v1)       v(v2)+5     v(v3)+10        v(v4)+15 
-plot    v(resol0)   v(resol1)+6 v(resol2)+12    v(out0)+16  v(out1)+21  v(out2)+26
-plot    v(out0)     v(resol0)
-plot    v(out1)     v(resol1)
-plot    v(out2)     v(resol2)
+* plot    v(v1)       v(v2)+5     v(v3)+10        v(v4)+15 
+* plot    v(resol0)   v(resol1)+6 v(resol2)+12    v(out0)+16  v(out1)+21  v(out2)+26
+* plot    v(out0)     v(resol0)
+* plot    v(out1)     v(resol1)
+* plot    v(out2)     v(resol2)
 
 .endc
 .end

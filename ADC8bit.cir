@@ -1,0 +1,71 @@
+*ADC 8 bit*
+********************
+*INPUT FOR TESTING*
+********************
+vin inp 0   sine(2 2 10 0 0 0)
+
+.include PriorityEncoder.cir
+**********************
+*8 BIT ADC SUBCIRCUIT*
+**********************
+.subckt ADC8bit inp resol0  resol1  resol2  v1  v2  v3  v4  v5  v6  v7
+
+vref    ref 0   4
+
+*****************
+*VOLTAGE DIVIDER*
+*****************
+r1  ref n1  1K
+r2  n1  n2  1K
+r3  n2  n3  1K
+r4  n3  n4  1K
+r5  n4  n5  1K
+r6  n5  n6  1K
+r7  n6  n7  1K
+r8  n7  0   1K
+
+vcc     6   0   5 
+vdd     7   0   0
+
+*************
+*COMPARATORS*
+*************
+XU1 inp n7  6   7   v1  UA741
+XU2 inp n6  6   7   v2  UA741
+XU3 inp n5  6   7   v3  UA741
+XU4 inp n4  6   7   v4  UA741
+XU5 inp n3  6   7   v5  UA741
+XU6 inp n2  6   7   v6  UA741
+XU7 inp n1  6   7   v7  UA741
+
+**********************************
+*PRIORIY ENCODER AND THRESHOLDING*
+**********************************
+Xu8     0   v1  v2  v3  v4  v5  v6  v7  out0    out1    out2    PEnc83
+Xu9     out0    resol0  NoiseRem
+Xu10    out1    resol1  NoiseRem
+Xu11    out2    resol2  NoiseRem
+.ends   ADC8bit
+
+
+Xu1 inp out0    out1    out2    v1  v2  v3  v4  v5  v6  v7  ADC8bit
+
+.tran   10u 128m
+.control
+run
+
+set color0=black
+set color1=white 
+set color2=red
+set color3=blue
+set color4=green
+
+plot    v(inp)
+plot    v(out0)
+plot    v(out1) 
+plot    v(out2)
+plot    v(v1)   v(v2)+5     v(v3)+10    v(v4)+15    v(v5)+20    v(v6)+25    v(v7)+30
+plot    v(out0)+v(out1)*2+v(out2)*4
+
+.endc
+.end
