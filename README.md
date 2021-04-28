@@ -66,3 +66,5 @@ Using AOI, we tried to reduce the number of MOSFET's used in making each gate. T
 #### 6. XOR Gate
 
 ![XOR Gate Circuit](Circuits/XorGate.png "XOR Gate")
+
+For More Information Refer To the Report through this [link](https://drive.google.com/file/d/1msZa1UPSvkY5PF6-qT103bYxw3pEaOKy/view?usp=sharing)
