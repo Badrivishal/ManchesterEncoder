@@ -1,4 +1,6 @@
-*Parallel IN Serial OUT
+* Parallel IN Serial OUT
+* Design by: Skull0nFire
+* Wed, Apr 28, 2021 02:22:43 
 ********************
 *INPUTS FOR TESTING*
 ********************
@@ -13,47 +15,46 @@
 ****************
 *3 inp NOR gate*
 ****************
-.subckt nor3 in1 in2 in3 out
-Xn1 in1 in2 n0 nor
-Xn2 n0 n0 n1 nor
-Xn3 n1 in3 out nor
-.ends
+.subckt nor3    in1 in2 in3 out
+Xn1 in1 in2 n0  nor
+Xn2 n0  n0  n1  nor
+Xn3 n1  in3 out nor
+.ends   nor3
 
 
 ************************************
 *Negative edge triggered D flipFlop*
 ************************************
-.subckt flipFlopD d clk q notq
+.subckt flipFlopD   d   clk q   notq
 
-X4 n0 d n1 nor
-X3 n3 clk n1 n0 nor3
-X2 n2 clk n3 nor
-X1 n1 n3 n2 nor
+X4  n0  d   n1  nor
+X3  n3  clk n1  n0 nor3
+X2  n2  clk n3  nor
+X1  n1  n3  n2  nor
 
-X5 n3 notq q nor
-X6 q n0 notq nor
+X5  n3  notq    q       nor
+X6  q   n0      notq    nor
 .ends
 
 ***********************
 *3 BIT PISO SUBCIRCUIT*
 ***********************
-.subckt PISO SL clk b0 b1 b2 q2
-Xn1 SL notSL not
+.subckt PISO    SL  clk b0  b1  b2  q2
+Xn1 SL  notSL   not
 
-Xd0 b0 clk q0 notq0 flipFlopD
+Xd0 b0  clk q0  notq0   flipFlopD
 
-Xa1 q0 SL n0 and
-Xa2 notSL b1 n1 and
-Xo1 n0 n1 d1 or
+Xa1 q0      SL  n0  and
+Xa2 notSL   b1  n1  and
+Xo1 n0      n1  d1  or
 
-Xd1 d1 clk q1 notq1 flipFlopD
+Xd1 d1  clk q1  notq1   flipFlopD
 
-Xa3 q1 SL n2 and
-Xa4 notSL b2 n3 and
-Xo2 n2 n3 d2 or
+Xa3 q1      SL  n2  and
+Xa4 notSL   b2  n3  and
+Xo2 n2      n3  d2  or
 
-Xd2 d2 clk q2 notq2 flipFlopD
-
+Xd2 d2  clk q2  notq2   flipFlopD
 .ends PISO
 
 

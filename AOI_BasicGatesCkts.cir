@@ -1,4 +1,6 @@
-* Gates using MOSFET A nand B
+* Basic Gates using MOSFET A nand B
+* Design by: Skull0nFire
+* Wed, Apr 28, 2021 02:22:43 
 ********************
 *INPUTS FOR TESTING*
 ********************
@@ -8,89 +10,89 @@
 **********
 *NOT GATE*
 **********
-.subckt not 1 2
-v1 3 0 5
-m1 3 1 2 3 PFET
-m3 2 1 0 0 NFET
-.ends
+.subckt not in   out
+v1  n1  0   5
+m1  n1  in  out n1  PFET
+m3  out in  0   0   NFET
+.ends   not
 
 **********
 *AND GATE*
 **********
 .subckt and in1 in2 out
-vdd vd 0 5
-mp1 vd in1 np1 vd PFET
-mp2 vd in2 np1 vd PFET
+vdd vd  0   5
+mp1 vd  in1 np1 vd  PFET
+mp2 vd  in2 np1 vd  PFET
 
-mn3 np1 in1 nn1 0 NFET
-mn4 nn1 in2 0 0 NFET
+mn3 np1 in1 nn1 0   NFET
+mn4 nn1 in2 0   0   NFET
 
 Xu1 np1 out not
-.ends and
+.ends   and
 
 ***********
 *NAND GATE*
 ***********
-.subckt nand in1 in2 out
-vdd vd 0 5
-mp1 vd in1 out vd PFET
-mp2 vd in2 out vd PFET
+.subckt nand    in1 in2 out
+vdd vd  0   5
+mp1 vd  in1 out vd  PFET
+mp2 vd  in2 out vd  PFET
 
-mn3 out in1 nn1 0 NFET
-mn4 nn1 in2 0 0 NFET
-.ends nand
+mn3 out in1 nn1 0   NFET
+mn4 nn1 in2 0   0   NFET
+.ends   nand
 
 **********
 *NOR GATE*
 **********
 .subckt nor in1 in2 out
-vdd vd 0 5
-mp1 vd in1 np1 vd PFET
-mp2 np1 in2 out vd PFET
+vdd vd  0   5
+mp1 vd  in1 np1 vd  PFET
+mp2 np1 in2 out vd  PFET
 
-mn3 out in1 0 0 NFET
-mn4 out in2 0 0 NFET
-.ends nor
+mn3 out in1 0   0   NFET
+mn4 out in2 0   0   NFET
+.ends   nor
 
 *********
 *OR GATE*
 *********
-.subckt or in1 in2 out
-vdd vd 0 5
-mp1 vd in1 np1 vd PFET
-mp2 np1 in2 np2 vd PFET
+.subckt or  in1 in2 out
+vdd vd  0   5
+mp1 vd  in1 np1 vd  PFET
+mp2 np1 in2 np2 vd  PFET
 
-mn3 np2 in1 0 0 NFET
-mn4 np2 in2 0 0 NFET
+mn3 np2 in1 0   0   NFET
+mn4 np2 in2 0   0   NFET
 
 Xu1 np2 out not
-.ends or
+.ends   or
 
 **********
 *XOR GATE*
 **********
 .subckt xor in1 in2 out
-Xu1 in1 notin1 not
-Xu2 in2 notin2 not
+Xu1 in1 notin1  not
+Xu2 in2 notin2  not
 
-vdd vd 0 5
+vdd vd  0   5
 
-mp1 vd notin2 np1 vd PFET
-mp2 np1 in1 out vd PFET
-mp3 vd in2 np2 vd PFET
-mp4 np2 notin1 out vd PFET
+mp1 vd  notin2  np1 vd  PFET
+mp2 np1 in1     out vd  PFET
+mp3 vd  in2     np2 vd  PFET
+mp4 np2 notin1  out vd  PFET
 
-mn1 out in2 nn1 0 NFET
-mn2 nn1 in1 0 0 NFET
-mn3 out notin2 nn2 0 NFET
-mn4 nn2 notin1 0 0 NFET
+mn1 out in2     nn1 0   NFET
+mn2 nn1 in1     0   0   NFET
+mn3 out notin2  nn2 0   NFET
+mn4 nn2 notin1  0   0   NFET
 
 .ends xor
 
+.model PFET PMOS
+.model NFET NMOS
 * Xu1 a b out xor
 
-* .model PFET PMOS
-* .model NFET NMOS
 * .tran 1u 20m
 * .control
 * run
