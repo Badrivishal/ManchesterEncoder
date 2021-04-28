@@ -2,8 +2,8 @@
 ********************
 *INPUTS FOR TESTING*
 ********************
-va a 0 PULSE(0 5 0 0 0 5m 10m)
-vb b 0 PULSE(0 5 0 0 0 10m 20m)
+* va a 0 PULSE(0 5 0 0 0 5m 10m)
+* vb b 0 PULSE(0 5 0 0 0 10m 20m)
 
 **********
 *NOT GATE*
@@ -87,20 +87,20 @@ mn4 nn2 notin1 0 0 NFET
 
 .ends xor
 
-Xu1 a b out xor
+* Xu1 a b out xor
 
-.model PFET PMOS
-.model NFET NMOS
-.tran 1u 20m
-.control
-run
+* .model PFET PMOS
+* .model NFET NMOS
+* .tran 1u 20m
+* .control
+* run
 
-set color0=black
-set color1=white
-set color2=red
-set color3=blue
-set color4=green
+* set color0=black
+* set color1=white
+* set color2=red
+* set color3=blue
+* set color4=green
 
-plot v(a) v(b)+5 v(out)+10
+* plot v(a) v(b)+5 v(out)+10
 .endc
 .end
