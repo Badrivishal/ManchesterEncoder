@@ -2,7 +2,7 @@
 ********************
 *INPUT FOR TESTING*
 ********************
-vin inp 0   sine(2 2 10 0 0 0)
+* vin inp 0   sine(2 2 10 0 0 0)
 
 .include PriorityEncoder.cir
 **********************
@@ -48,24 +48,24 @@ Xu11    out2    resol2  NoiseRem
 .ends   ADC8bit
 
 
-Xu1 inp out0    out1    out2    v1  v2  v3  v4  v5  v6  v7  ADC8bit
+* Xu1 inp out0    out1    out2    v1  v2  v3  v4  v5  v6  v7  ADC8bit
 
-.tran   10u 128m
-.control
-run
+* .tran   10u 128m
+* .control
+* run
 
-set color0=black
-set color1=white 
-set color2=red
-set color3=blue
-set color4=green
+* set color0=black
+* set color1=white 
+* set color2=red
+* set color3=blue
+* set color4=green
 
-plot    v(inp)
-plot    v(out0)
-plot    v(out1) 
-plot    v(out2)
-plot    v(v1)   v(v2)+5     v(v3)+10    v(v4)+15    v(v5)+20    v(v6)+25    v(v7)+30
-plot    v(out0)+v(out1)*2+v(out2)*4
+* plot    v(inp)
+* plot    v(out0)
+* plot    v(out1) 
+* plot    v(out2)
+* plot    v(v1)   v(v2)+5     v(v3)+10    v(v4)+15    v(v5)+20    v(v6)+25    v(v7)+30
+* plot    v(out0)+v(out1)*2+v(out2)*4
 
 .endc
 .end
