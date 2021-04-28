@@ -2,10 +2,17 @@
 
 The project uses NG SPICE to Simulate a Encoder which can be used to convert an Analog Signal to Manchester Encoded Digital Data. The Encoder comprises of the following Major SubCircuits:
 
-- Priority Encoder
-- Analog To Digital Converter (ADC)
-- Parallel IN Serial OUT (PISO)
-- Basic Gates
+
+  - [Priority Encoder](#priority-encoder)
+  - [Analog To Digital Converter (ADC)](#analog-to-digital-converter-adc)
+  - [Parallel IN Serial OUT (PISO)](#parallel-in-serial-out-piso)
+  - [Basic Gates](#basic-gates)
+      - [NOT Gate](#1-not-gate)
+      - [NAND Gate](#2-nand-gate)
+      - [AND Gate](#3-and-gate)
+      - [NOR Gate](#4-nor-gate)
+      - [OR Gate](#5-or-gate)
+      - [XOR Gate](#6-xor-gate)
 
 ![Flow Chart](Circuits/Flowchart.png "Manchester Encoder")
 
