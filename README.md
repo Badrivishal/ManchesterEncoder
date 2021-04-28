@@ -17,7 +17,7 @@ We have implemented a 8 - 3 Priority Encoder, quantizing the input into 8 levels
 ![Truth Table](Circuits/PriorityEnc.png "Priority Encoder")
 
 From the above Truth Table we can formulate the following Logic Equations:
-
+<!-- 
 $$
 Y_2 = \Sigma(D_4 + D_5 + D_6 +D_7)
 $$
@@ -28,7 +28,10 @@ $$
 
 $$
 Y_0 = \Sigma(\bar{D_6}\bar{D_4}\bar{D_2}D_1 + \bar{D_6}\bar{D_4}D_3 + \bar{D_6}D_5 + D_7)
-$$
+$$ -->
+
+![Priority Encoder Logic Equations](Circuits/Equations.png "Priority Encoder Logic Equations")
+
 
 ## Analog To Digital Converter (ADC)
 We use the Priority Encoder Coupled with Comparators and a Voltage Divider to get the Quantized Digital Output of the input Analog Signal. We use the following Template:
